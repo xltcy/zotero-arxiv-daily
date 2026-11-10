@@ -1,4 +1,6 @@
+
 name: Send emails daily
+
 on:
   workflow_dispatch:
   schedule:
@@ -7,12 +9,10 @@ on:
 jobs:
   calculate-and-send:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-        with:
-          repository: ${{ vars.REPOSITORY }}
-          ref: ${{ vars.REF }}
 
       - name: Setup uv
         uses: astral-sh/setup-uv@v7
@@ -29,6 +29,5 @@ jobs:
           CUSTOM_CONFIG: ${{ vars.CUSTOM_CONFIG }}
         run: |
           printf "%b\n" "$CUSTOM_CONFIG" > config/custom.yaml
-          echo "Use custom config: "
-          cat config/custom.yaml
           uv run src/zotero_arxiv_daily/main.py
+  
